@@ -1,0 +1,9 @@
+{
+  "name": "ScamShield Transfer Risk",
+  "short_name": "ScamShield",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f4f8f6",
+  "theme_color": "#102126",
+  "icons": []
+}

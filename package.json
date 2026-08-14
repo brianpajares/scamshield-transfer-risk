@@ -1,0 +1,20 @@
+{
+  "name": "scamshield-transfer-risk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ScamShield Transfer Risk MVP: deterministic transfer risk assessment app.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "test": "node tests/risk-engine.test.js"
+  },
+  "keywords": [
+    "risk",
+    "fraud",
+    "scam",
+    "pwa",
+    "assessment"
+  ],
+  "author": "ScamShield",
+  "license": "UNLICENSED"
+}
