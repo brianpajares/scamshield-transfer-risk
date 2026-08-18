@@ -49,3 +49,5 @@ The repository includes both `vercel.json` and `netlify.toml`.
 - Vercel: static deployment from the repository root.
 - Netlify: publish directory `.` with no build command required.
 - `npm run build` performs a production file check.
+
+See `docs/DEPLOYMENT.md` for exact production settings.
