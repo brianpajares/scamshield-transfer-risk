@@ -6,6 +6,8 @@ Current production URL: https://escudo-transferencia.netlify.app/
 
 Netlify project: https://app.netlify.com/projects/escudo-transferencia
 
+Recommended primary host: Cloudflare Pages. Keep Netlify as backup.
+
 Last verified HTTP status: `200 OK` on 2026-08-18 after deploy `6a84c4c7629b44f76136dd23`.
 
 ## Vercel
@@ -73,3 +75,15 @@ Already configured in Netlify:
 - `APP_URL=https://escudo-transferencia.netlify.app`
 - `PAYMENT_PROVIDER=mercadopago`
 - `BILLING_ENABLED=false`
+
+## Cloudflare Pages
+
+Use Cloudflare Pages as the main production host to avoid Netlify deploy credit
+pauses.
+
+- Build command: `npm run build:cloudflare`
+- Build output directory: `.cloudflare-pages`
+- Functions directory: `functions`
+- Project name: `escudo-transferencia`
+
+See `docs/CLOUDFLARE_DEPLOYMENT.md`.

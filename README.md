@@ -56,8 +56,10 @@ See `docs/MERCADOPAGO_SUPABASE_SETUP.md` for the exact account-connection steps.
 The repository includes both `vercel.json` and `netlify.toml`.
 
 - Production Netlify URL: https://escudo-transferencia.netlify.app/
+- Cloudflare-ready build: `npm run build:cloudflare`
 - Vercel: static deployment from the repository root.
 - Netlify: publish directory `.` with no build command required.
 - `npm run build` performs a production file check.
 
 See `docs/DEPLOYMENT.md` for exact production settings.
+See `docs/CLOUDFLARE_DEPLOYMENT.md` for the recommended primary deployment path.

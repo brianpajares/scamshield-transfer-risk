@@ -4,6 +4,17 @@ Repositorio: https://github.com/brianpajares/scamshield-transfer-risk
 
 Carpeta Drive maestra: ScamShield_Transfer_Risk
 
+## 2026-08-18 - Preparacion Cloudflare Pages
+
+Commit: pendiente
+
+- Se agregaron Cloudflare Pages Functions equivalentes a las funciones Netlify.
+- Se agrego build `npm run build:cloudflare`.
+- Se agregaron `_headers`, `_redirects` y `wrangler.jsonc`.
+- Se agrego `docs/CLOUDFLARE_DEPLOYMENT.md`.
+- Se intento deploy via Wrangler, pero Cloudflare requiere `CLOUDFLARE_API_TOKEN` en modo no interactivo.
+- Netlify queda como respaldo publicado.
+
 ## 2026-08-18 - Integracion Auth y Mercado Pago
 
 Commit: `3cc2cdc Add Supabase auth and Mercado Pago integration`
