@@ -6,7 +6,7 @@ Carpeta Drive maestra: ScamShield_Transfer_Risk
 
 ## 2026-08-18 - Integracion Auth y Mercado Pago
 
-Commit: pendiente
+Commit: `3cc2cdc Add Supabase auth and Mercado Pago integration`
 
 - Se agrego Supabase Auth en frontend: registro, login, logout y sesion.
 - Se agrego guardado remoto de assessments para usuarios autenticados.
