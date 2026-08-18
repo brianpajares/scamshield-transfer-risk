@@ -15,6 +15,8 @@ Commit: `3cc2cdc Add Supabase auth and Mercado Pago integration`
 - Se agrego webhook `/api/mercadopago-webhook` con validacion HMAC `x-signature`.
 - Se agrego migracion `0003_auth_mercadopago_activation.sql`.
 - Se agrego guia `docs/MERCADOPAGO_SUPABASE_SETUP.md`.
+- Se desplego Netlify deploy `6a84c4c7629b44f76136dd23`.
+- Se configuraron variables no secretas `APP_URL`, `PAYMENT_PROVIDER` y `BILLING_ENABLED=false`.
 
 ## 2026-08-18 - Produccion Netlify
 

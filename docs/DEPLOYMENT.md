@@ -6,7 +6,7 @@ Current production URL: https://escudo-transferencia.netlify.app/
 
 Netlify project: https://app.netlify.com/projects/escudo-transferencia
 
-Last verified HTTP status: `200 OK` on 2026-08-18.
+Last verified HTTP status: `200 OK` on 2026-08-18 after deploy `6a84c4c7629b44f76136dd23`.
 
 ## Vercel
 
@@ -44,7 +44,7 @@ The included `netlify.toml` adds SPA fallback routing and security headers.
 
 Current site ID: `c70334b4-b8fd-47e9-955e-2cf860e95e09`
 
-Current deploy ID: `6a84bfe69a406c854dfe4ff5`
+Current deploy ID: `6a84c4c7629b44f76136dd23`
 
 ## Production Readiness Checklist
 
@@ -67,3 +67,9 @@ Current deploy ID: `6a84bfe69a406c854dfe4ff5`
 - `BILLING_ENABLED`
 
 Keep `BILLING_ENABLED=false` until Supabase migrations and Mercado Pago webhooks are verified.
+
+Already configured in Netlify:
+
+- `APP_URL=https://escudo-transferencia.netlify.app`
+- `PAYMENT_PROVIDER=mercadopago`
+- `BILLING_ENABLED=false`

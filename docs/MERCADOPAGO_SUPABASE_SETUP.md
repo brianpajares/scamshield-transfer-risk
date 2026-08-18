@@ -36,6 +36,12 @@ Activacion comercial:
 - `BILLING_ENABLED=false` durante pruebas.
 - Cambiar a `BILLING_ENABLED=true` solo despues de probar login, migraciones y webhook.
 
+Ya deje configuradas en Netlify las variables no secretas:
+
+- `APP_URL=https://escudo-transferencia.netlify.app`
+- `PAYMENT_PROVIDER=mercadopago`
+- `BILLING_ENABLED=false`
+
 No usar secretos en `index.html`, `src/*`, GitHub ni mensajes de chat.
 
 ## Supabase
