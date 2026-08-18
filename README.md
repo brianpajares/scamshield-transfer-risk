@@ -41,3 +41,11 @@ The app currently uses a local seed model so it can run without secrets. For pro
 - Payment adapter only after `billing_enabled=true` and commercial hosting/compliance are ready.
 
 The scoring copy intentionally avoids fraud-probability claims until real outcomes and calibration exist.
+
+## Hosting
+
+The repository includes both `vercel.json` and `netlify.toml`.
+
+- Vercel: static deployment from the repository root.
+- Netlify: publish directory `.` with no build command required.
+- `npm run build` performs a production file check.
