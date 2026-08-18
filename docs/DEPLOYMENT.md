@@ -54,3 +54,16 @@ Current deploy ID: `6a84bfe69a406c854dfe4ff5`
 - Billing and paywall flags remain off for free beta.
 - The app does not claim calibrated fraud probability.
 - Supabase, Drive, Turnstile, PostHog and AI keys are added only in the hosting provider dashboard when those integrations are enabled.
+
+## Required Env Vars For Auth And Payments
+
+- `APP_URL`
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SECRET_KEY`
+- `MERCADOPAGO_PUBLIC_KEY`
+- `MERCADOPAGO_ACCESS_TOKEN`
+- `MERCADOPAGO_WEBHOOK_SECRET`
+- `BILLING_ENABLED`
+
+Keep `BILLING_ENABLED=false` until Supabase migrations and Mercado Pago webhooks are verified.

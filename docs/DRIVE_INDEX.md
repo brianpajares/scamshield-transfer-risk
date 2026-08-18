@@ -11,6 +11,7 @@ Carpeta: https://drive.google.com/drive/folders/1BNnMt5LfoFs10swccEo60hu5Mnnnhf-
 - DEPLOYMENT.md: https://drive.google.com/file/d/1kO8OLYTDEhuNavNf9L6oWUY2Qw2yiY-R/view?usp=drivesdk
 - MONETIZATION.md: https://drive.google.com/file/d/179C9Xsjp8P0hWo_apgJsksh6oIebFCEe/view?usp=drivesdk
 - FREE_OPERATIONS_PERU.md: https://drive.google.com/file/d/18vf3BGWIOVxjB-LImPFdz3P7bsJNh1Me/view?usp=drivesdk
+- MERCADOPAGO_SUPABASE_SETUP.md: https://drive.google.com/file/d/1Rl8dXjbP6RXJM02cJQZo5IfToG-7ZFdm/view?usp=drivesdk
 - PRD_REVIEW.md: https://drive.google.com/file/d/1tDAqWtmnMkF6nJtirBGc94QVlM_x8H8l/view?usp=drivesdk
 - DRIVE_GITHUB_SYNC.md: https://drive.google.com/file/d/1tyAR2hCWXz93NBjmXcn7xF4MJzND0C0k/view?usp=drivesdk
 - IMPLEMENTATION_SUMMARY.md: https://drive.google.com/file/d/15PIAREQpOdfKBdE-XdPt5NR6D4KLB58B/view?usp=drivesdk

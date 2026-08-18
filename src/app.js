@@ -4,6 +4,8 @@ import { redactPII, scoreAssessment } from "./engine/risk-engine.js";
 import { evaluateAccess } from "./services/entitlements.js";
 import { createPaymentProvider } from "./services/payment-provider.js";
 import { clearHistory, incrementUsage, loadHistory, loadSettings, loadUsage, saveAssessment, saveSettings } from "./services/storage.js";
+import { getAuthSession, saveRemoteAssessment, signInWithEmail, signOut, signUpWithEmail } from "./services/auth.js";
+import { loadPublicConfig } from "./services/app-config.js";
 
 const app = document.querySelector("#app");
 const state = {
@@ -27,7 +29,16 @@ const state = {
   },
   result: null,
   redaction: null,
-  settings: loadSettings()
+  settings: loadSettings(),
+  config: null,
+  auth: {
+    configured: false,
+    user: null,
+    session: null,
+    mode: "signin",
+    message: ""
+  },
+  pending: false
 };
 
 const steps = [
@@ -122,6 +133,7 @@ function render() {
         ${navButton("pricing", "Planes")}
         ${navButton("history", "Historial")}
         ${navButton("admin", "Admin")}
+        ${navButton("auth", state.auth.user ? "Cuenta" : "Ingresar")}
       </nav>
     </header>
     <main class="shell">
@@ -130,6 +142,7 @@ function render() {
       ${state.view === "pricing" ? renderPricing() : ""}
       ${state.view === "history" ? renderHistory() : ""}
       ${state.view === "admin" ? renderAdmin() : ""}
+      ${state.view === "auth" ? renderAuth() : ""}
     </main>
   `;
   bindEvents();
@@ -222,6 +235,7 @@ function renderPricing() {
           <dt>Billing</dt><dd>${state.settings.billing_enabled ? "Activo" : "Apagado"}</dd>
           <dt>Paywall</dt><dd>${state.settings.paywall_enabled ? "Activo" : "Apagado"}</dd>
           <dt>Provider</dt><dd>${state.settings.provider_configured ? "Configurado" : "Pendiente"}</dd>
+          <dt>Usuario</dt><dd>${state.auth.user?.email || "No autenticado"}</dd>
           <dt>Cuota actual</dt><dd>${access.assessmentsRemaining} evaluaciones y ${access.pdfsRemaining} PDFs disponibles</dd>
         </dl>
         <div class="notice">${access.reason}</div>
@@ -238,6 +252,53 @@ function renderPricing() {
           <button class="${plan.id === access.plan.id ? "secondary" : "primary"}" data-action="checkout" data-plan="${plan.id}" ${state.settings.billing_enabled && state.settings.provider_configured ? "" : "disabled"}>${plan.cta}</button>
         </article>
       `).join("")}
+    </section>
+  `;
+}
+
+function renderAuth() {
+  const isSignin = state.auth.mode === "signin";
+  return `
+    <section class="section-head">
+      <div>
+        <p class="eyebrow">Cuenta segura</p>
+        <h1>${state.auth.user ? "Tu cuenta" : isSignin ? "Ingresar" : "Crear cuenta"}</h1>
+        <p class="lead">La cuenta permite guardar evaluaciones, asociar pagos y activar planes sin depender del navegador.</p>
+      </div>
+    </section>
+    <section class="auth-layout">
+      <div class="panel">
+        ${state.auth.configured ? "" : `<div class="notice">Supabase aun no esta configurado en Netlify. Agrega SUPABASE_URL y SUPABASE_PUBLISHABLE_KEY para activar autenticacion.</div>`}
+        ${state.auth.message ? `<div class="notice">${escapeHtml(state.auth.message)}</div>` : ""}
+        ${state.auth.user ? `
+          <dl class="kv">
+            <dt>Email</dt><dd>${escapeHtml(state.auth.user.email || "")}</dd>
+            <dt>User ID</dt><dd>${escapeHtml(state.auth.user.id || "")}</dd>
+          </dl>
+          <div class="actions"><button class="secondary" data-action="signout">Cerrar sesión</button></div>
+        ` : `
+          <label class="field">
+            <span>Email</span>
+            <input data-auth="email" type="email" autocomplete="email" />
+          </label>
+          <label class="field">
+            <span>Contraseña</span>
+            <input data-auth="password" type="password" autocomplete="${isSignin ? "current-password" : "new-password"}" />
+          </label>
+          <div class="actions wrap">
+            <button class="primary" data-action="${isSignin ? "signin" : "signup"}" ${state.pending || !state.auth.configured ? "disabled" : ""}>${isSignin ? "Ingresar" : "Crear cuenta"}</button>
+            <button class="secondary" data-action="toggle-auth-mode">${isSignin ? "Crear cuenta" : "Ya tengo cuenta"}</button>
+          </div>
+        `}
+      </div>
+      <div class="panel">
+        <h2>Estado de integraciones</h2>
+        <dl class="kv">
+          <dt>Supabase Auth</dt><dd>${state.auth.configured ? "Configurado" : "Pendiente"}</dd>
+          <dt>Mercado Pago</dt><dd>${state.config?.mercadoPagoPublicKey ? "Public key lista" : "Pendiente"}</dd>
+          <dt>Billing server</dt><dd>${state.config?.billingEnabled ? "Activado" : "Apagado"}</dd>
+        </dl>
+      </div>
     </section>
   `;
 }
@@ -332,7 +393,7 @@ function bindEvents() {
   });
 }
 
-function handleAction(action, element) {
+async function handleAction(action, element) {
   if (action === "view") {
     state.view = element.dataset.view;
   }
@@ -345,22 +406,46 @@ function handleAction(action, element) {
     incrementUsage("assessments");
     state.view = "result";
   }
-  if (action === "save" && state.result) saveAssessment(state.result);
+  if (action === "save" && state.result) {
+    saveAssessment(state.result);
+    const remote = await saveRemoteAssessment({ input: state.input, result: state.result });
+    if (!remote.ok && remote.reason !== "auth_required") window.alert(`Guardado local listo. Supabase: ${remote.reason}`);
+  }
   if (action === "print") {
     incrementUsage("pdfs");
     window.print();
   }
   if (action === "checkout") {
+    if (!state.auth.user || !state.auth.session?.access_token) {
+      state.view = "auth";
+      state.auth.message = "Inicia sesión antes de pagar para asociar el plan a tu cuenta.";
+      return render();
+    }
     const provider = createPaymentProvider({
       billingEnabled: Boolean(state.settings.billing_enabled),
       providerConfigured: Boolean(state.settings.provider_configured)
     });
     const checkout = provider.createCheckoutSession({
       planId: element.dataset.plan,
-      userId: "anonymous-local",
+      userId: state.auth.user.id,
       assessmentId: state.result?.assessmentId
     });
-    window.alert(checkout.message);
+    if (!checkout.ok) {
+      window.alert(checkout.message);
+    } else {
+      await startCheckout(element.dataset.plan);
+      return;
+    }
+  }
+  if (action === "toggle-auth-mode") {
+    state.auth.mode = state.auth.mode === "signin" ? "signup" : "signin";
+    state.auth.message = "";
+  }
+  if (action === "signin" || action === "signup") await submitAuth(action);
+  if (action === "signout") {
+    await signOut();
+    await refreshAuth();
+    state.auth.message = "Sesión cerrada.";
   }
   if (action === "restart") {
     state.step = 0;
@@ -377,6 +462,64 @@ function handleAction(action, element) {
     saveSettings(next);
   }
   render();
+}
+
+async function submitAuth(action) {
+  const email = app.querySelector("[data-auth='email']")?.value?.trim();
+  const password = app.querySelector("[data-auth='password']")?.value || "";
+  if (!email || password.length < 6) {
+    state.auth.message = "Ingresa un email valido y una contraseña de al menos 6 caracteres.";
+    return;
+  }
+
+  state.pending = true;
+  state.auth.message = "";
+  render();
+
+  const { error } = action === "signin"
+    ? await signInWithEmail(email, password)
+    : await signUpWithEmail(email, password);
+
+  state.pending = false;
+  if (error) {
+    state.auth.message = error.message;
+    return;
+  }
+
+  await refreshAuth();
+  state.auth.message = action === "signin"
+    ? "Sesión iniciada."
+    : "Cuenta creada. Si Supabase requiere confirmación, revisa tu correo.";
+}
+
+async function startCheckout(planId) {
+  const response = await fetch("/api/create-checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${state.auth.session.access_token}`
+    },
+    body: JSON.stringify({
+      planId,
+      assessmentId: state.result?.assessmentId || null
+    })
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || !payload.initPoint) {
+    window.alert(payload.error || "No se pudo iniciar Mercado Pago.");
+    return;
+  }
+  window.location.href = payload.initPoint;
+}
+
+async function refreshAuth() {
+  const auth = await getAuthSession();
+  state.auth = {
+    ...state.auth,
+    configured: auth.configured,
+    user: auth.user,
+    session: auth.session
+  };
 }
 
 function radio(name, label, options) {
@@ -409,4 +552,17 @@ function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char]);
 }
 
-render();
+async function init() {
+  state.config = await loadPublicConfig();
+  if (state.config.billingEnabled) {
+    state.settings = {
+      ...state.settings,
+      billing_enabled: true,
+      provider_configured: Boolean(state.config.mercadoPagoPublicKey)
+    };
+  }
+  await refreshAuth();
+  render();
+}
+
+init();

@@ -16,6 +16,7 @@ Commercial brand for Peru: Escudo Transferencia. Repository name is kept as
 - Admin screen for beta flags and model status.
 - Supabase starter migration, `.env.example`, architecture notes and tests.
 - Monetization-ready plan catalog in PEN, entitlement rules and payment-provider contract.
+- Supabase Auth client integration and Netlify Functions for Mercado Pago checkout/webhook.
 
 ## Run locally
 
@@ -48,6 +49,7 @@ The scoring copy intentionally avoids fraud-probability claims until real outcom
 
 See `docs/MONETIZATION.md` and `docs/FREE_OPERATIONS_PERU.md` for the go-live checklist,
 payment activation sequence and Peru commercial plan.
+See `docs/MERCADOPAGO_SUPABASE_SETUP.md` for the exact account-connection steps.
 
 ## Hosting
 

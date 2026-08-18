@@ -4,6 +4,18 @@ Repositorio: https://github.com/brianpajares/scamshield-transfer-risk
 
 Carpeta Drive maestra: ScamShield_Transfer_Risk
 
+## 2026-08-18 - Integracion Auth y Mercado Pago
+
+Commit: pendiente
+
+- Se agrego Supabase Auth en frontend: registro, login, logout y sesion.
+- Se agrego guardado remoto de assessments para usuarios autenticados.
+- Se agrego funcion Netlify `/api/public-config`.
+- Se agrego funcion Netlify `/api/create-checkout` para crear preferencias Mercado Pago.
+- Se agrego webhook `/api/mercadopago-webhook` con validacion HMAC `x-signature`.
+- Se agrego migracion `0003_auth_mercadopago_activation.sql`.
+- Se agrego guia `docs/MERCADOPAGO_SUPABASE_SETUP.md`.
+
 ## 2026-08-18 - Produccion Netlify
 
 Commit: `4ad28bb Document Netlify production deployment`
