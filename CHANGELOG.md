@@ -4,6 +4,16 @@ Repositorio: https://github.com/brianpajares/scamshield-transfer-risk
 
 Carpeta Drive maestra: ScamShield_Transfer_Risk
 
+## 2026-08-18 - Plan gratis y monetizacion Peru
+
+Commit: pendiente
+
+- Se definio nombre comercial en espanol: `Escudo Transferencia`.
+- Se cambiaron los precios semilla a soles: `S/ 0`, `S/ 14.90`, `S/ 29.90`.
+- Se fijo Mercado Pago como proveedor primario recomendado para Peru.
+- Se agrego `docs/FREE_OPERATIONS_PERU.md` con stack de costo fijo cero, fuentes oficiales, estrategia de cobro y checklist de go-live.
+- Se mantuvo el checkout bloqueado hasta tener proveedor real, secretos server-side y webhook verificado.
+
 ## 2026-08-18 - Capa de monetización
 
 Commit: `eb0fa6b Add monetization readiness layer`

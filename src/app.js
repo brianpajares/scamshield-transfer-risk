@@ -114,8 +114,8 @@ function render() {
   app.innerHTML = `
     <header class="shell topbar">
       <div class="brand" role="button" tabindex="0" data-action="view" data-view="assessment">
-        <span class="brand-mark">S</span>
-        <span><strong>ScamShield</strong><small>Transfer Risk</small></span>
+        <span class="brand-mark">E</span>
+        <span><strong>Escudo Transferencia</strong><small>Riesgo antes de pagar</small></span>
       </div>
       <nav aria-label="Principal">
         ${navButton("assessment", "Evaluar")}

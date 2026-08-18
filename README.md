@@ -1,6 +1,9 @@
-# ScamShield Transfer Risk
+# Escudo Transferencia
 
 Functional MVP generated from `PRD_ScamShield_Transfer_Risk_Master_FINAL.docx`.
+
+Commercial brand for Peru: Escudo Transferencia. Repository name is kept as
+`scamshield-transfer-risk` to preserve GitHub and deployment links.
 
 ## What is included
 
@@ -12,7 +15,7 @@ Functional MVP generated from `PRD_ScamShield_Transfer_Risk_Master_FINAL.docx`.
 - Browser-local history dashboard.
 - Admin screen for beta flags and model status.
 - Supabase starter migration, `.env.example`, architecture notes and tests.
-- Monetization-ready plan catalog, entitlement rules and payment-provider contract.
+- Monetization-ready plan catalog in PEN, entitlement rules and payment-provider contract.
 
 ## Run locally
 
@@ -43,7 +46,8 @@ The app currently uses a local seed model so it can run without secrets. For pro
 
 The scoring copy intentionally avoids fraud-probability claims until real outcomes and calibration exist.
 
-See `docs/MONETIZATION.md` for the go-live checklist and payment activation sequence.
+See `docs/MONETIZATION.md` and `docs/FREE_OPERATIONS_PERU.md` for the go-live checklist,
+payment activation sequence and Peru commercial plan.
 
 ## Hosting
 

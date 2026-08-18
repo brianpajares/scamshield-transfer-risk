@@ -1,6 +1,6 @@
 # Monetization Readiness
 
-ScamShield is now prepared for monetization, but billing remains disabled by design.
+Escudo Transferencia is now prepared for monetization, but billing remains disabled by design.
 
 ## Current Commercial State
 
@@ -14,11 +14,13 @@ ScamShield is now prepared for monetization, but billing remains disabled by des
 
 | Plan | Type | Seed price | Purpose |
 | --- | --- | ---: | --- |
-| FREE_BETA_V1 | Free beta | US$0 | Validate UX and usage without charging. |
-| FULL_REPORT | One-time | US$3.99 | Unlock full report, checklist and PDF for one case. |
-| PLUS | Subscription | US$8.99/month | Higher quota, history and repeated use. |
+| FREE_BETA_V1 | Free beta | S/ 0 | Validate UX and usage without charging. |
+| FULL_REPORT | One-time | S/ 14.90 | Unlock full report, checklist and PDF for one case. |
+| PLUS | Subscription | S/ 29.90/month | Higher quota, history and repeated use. |
 
-Prices are seed assumptions. Keep final prices in the operational database/provider dashboard, not hardcoded in product logic.
+Prices are seed assumptions for Peru. Keep final prices in the operational database/provider dashboard, not hardcoded in product logic.
+
+See also `docs/FREE_OPERATIONS_PERU.md` for the zero-fixed-cost operating plan and Peru payment strategy.
 
 ## Architecture Added
 

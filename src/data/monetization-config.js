@@ -3,8 +3,8 @@ export const billingState = {
   paywall_enabled: false,
   beta_free_mode: true,
   entitlement_engine_enabled: true,
-  provider: "stripe_or_mercadopago",
-  currency: "USD",
+  provider: "mercadopago_primary",
+  currency: "PEN",
   go_live_gate: "Enable only after legal/commercial hosting/payment review."
 };
 
@@ -12,7 +12,7 @@ export const plans = [
   {
     id: "FREE_BETA_V1",
     name: "Beta gratis",
-    priceLabel: "US$0",
+    priceLabel: "S/ 0",
     interval: "durante beta",
     description: "Para validar utilidad y UX sin cobrar.",
     monthlyAssessments: 20,
@@ -29,7 +29,7 @@ export const plans = [
   {
     id: "FULL_REPORT",
     name: "Reporte completo",
-    priceLabel: "US$3.99",
+    priceLabel: "S/ 14.90",
     interval: "pago unico",
     description: "Para usuarios que necesitan guardar evidencia y checklist completo.",
     monthlyAssessments: 1,
@@ -46,7 +46,7 @@ export const plans = [
   {
     id: "PLUS",
     name: "Plus",
-    priceLabel: "US$8.99",
+    priceLabel: "S/ 29.90",
     interval: "mensual",
     description: "Para uso recurrente, familias o pequenos negocios.",
     monthlyAssessments: 100,
