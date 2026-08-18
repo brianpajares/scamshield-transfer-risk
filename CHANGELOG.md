@@ -6,7 +6,7 @@ Carpeta Drive maestra: ScamShield_Transfer_Risk
 
 ## 2026-08-18 - Preparacion Cloudflare Pages
 
-Commit: pendiente
+Commit: `7342336 Prepare Cloudflare Pages deployment`
 
 - Se agregaron Cloudflare Pages Functions equivalentes a las funciones Netlify.
 - Se agrego build `npm run build:cloudflare`.
