@@ -478,7 +478,8 @@ textarea {
 }
 
 .history-grid,
-.admin-grid {
+.admin-grid,
+.pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
@@ -519,6 +520,55 @@ textarea {
 
 .admin-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.billing-status {
+  margin-bottom: 16px;
+}
+
+.pricing-grid {
+  align-items: stretch;
+}
+
+.price-card {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.price-card.current {
+  border-color: var(--trust);
+  background: linear-gradient(180deg, #ffffff, #eef8f4);
+}
+
+.price-card h2 {
+  margin: 0;
+}
+
+.price {
+  font-size: 2.2rem;
+  font-weight: 900;
+}
+
+.price span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.price-card ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 19px;
+  color: var(--muted);
 }
 
 .wide {
@@ -568,6 +618,7 @@ textarea {
   .result-layout,
   .section-head,
   .admin-grid,
+  .pricing-grid,
   .history-grid {
     grid-template-columns: 1fr;
   }

@@ -1,6 +1,9 @@
 import { modelConfig } from "./data/model-config.js";
+import { billingState, plans } from "./data/monetization-config.js";
 import { redactPII, scoreAssessment } from "./engine/risk-engine.js";
-import { clearHistory, loadHistory, loadSettings, saveAssessment, saveSettings } from "./services/storage.js";
+import { evaluateAccess } from "./services/entitlements.js";
+import { createPaymentProvider } from "./services/payment-provider.js";
+import { clearHistory, incrementUsage, loadHistory, loadSettings, loadUsage, saveAssessment, saveSettings } from "./services/storage.js";
 
 const app = document.querySelector("#app");
 const state = {
@@ -116,6 +119,7 @@ function render() {
       </div>
       <nav aria-label="Principal">
         ${navButton("assessment", "Evaluar")}
+        ${navButton("pricing", "Planes")}
         ${navButton("history", "Historial")}
         ${navButton("admin", "Admin")}
       </nav>
@@ -123,6 +127,7 @@ function render() {
     <main class="shell">
       ${state.view === "assessment" ? renderAssessment() : ""}
       ${state.view === "result" ? renderResult() : ""}
+      ${state.view === "pricing" ? renderPricing() : ""}
       ${state.view === "history" ? renderHistory() : ""}
       ${state.view === "admin" ? renderAdmin() : ""}
     </main>
@@ -192,9 +197,47 @@ function renderResult() {
         <div class="actions wrap">
           <button class="primary" type="button" data-action="save">Guardar evaluación</button>
           <button class="secondary" type="button" data-action="print">Generar PDF</button>
+          <button class="secondary" type="button" data-action="view" data-view="pricing">Ver planes</button>
           <button class="ghost" type="button" data-action="restart">Nueva evaluación</button>
         </div>
       </div>
+    </section>
+  `;
+}
+
+function renderPricing() {
+  const access = evaluateAccess({ settings: state.settings, usage: loadUsage() });
+  return `
+    <section class="section-head">
+      <div>
+        <p class="eyebrow">Monetización preparada</p>
+        <h1>Planes y límites</h1>
+        <p class="lead">La beta sigue gratis. La arquitectura de pago ya está separada por flags, planes y entitlements para activar cobros sin cambiar el motor de riesgo.</p>
+      </div>
+    </section>
+    <section class="billing-status">
+      <div class="panel">
+        <h2>Estado comercial</h2>
+        <dl class="kv">
+          <dt>Billing</dt><dd>${state.settings.billing_enabled ? "Activo" : "Apagado"}</dd>
+          <dt>Paywall</dt><dd>${state.settings.paywall_enabled ? "Activo" : "Apagado"}</dd>
+          <dt>Provider</dt><dd>${state.settings.provider_configured ? "Configurado" : "Pendiente"}</dd>
+          <dt>Cuota actual</dt><dd>${access.assessmentsRemaining} evaluaciones y ${access.pdfsRemaining} PDFs disponibles</dd>
+        </dl>
+        <div class="notice">${access.reason}</div>
+      </div>
+    </section>
+    <section class="pricing-grid">
+      ${plans.map((plan) => `
+        <article class="price-card ${plan.id === access.plan.id ? "current" : ""}">
+          <p class="eyebrow">${plan.id === access.plan.id ? "Plan actual" : "Futuro"}</p>
+          <h2>${plan.name}</h2>
+          <div class="price">${plan.priceLabel}<span>${plan.interval}</span></div>
+          <p>${plan.description}</p>
+          <ul>${plan.features.map((feature) => `<li>${feature}</li>`).join("")}</ul>
+          <button class="${plan.id === access.plan.id ? "secondary" : "primary"}" data-action="checkout" data-plan="${plan.id}" ${state.settings.billing_enabled && state.settings.provider_configured ? "" : "disabled"}>${plan.cta}</button>
+        </article>
+      `).join("")}
     </section>
   `;
 }
@@ -257,7 +300,7 @@ function renderAdmin() {
           <span>Supabase Auth + RLS</span>
           <span>DriveModelLoader manifest/cache/rollback</span>
           <span>PostHog events</span>
-          <span>PaymentProviderAdapter apagado en beta</span>
+          <span>PaymentProviderAdapter con webhook verificado</span>
         </div>
       </div>
     </div>
@@ -299,10 +342,26 @@ function handleAction(action, element) {
     state.redaction = redactPII(state.input.message);
     const safeInput = { ...state.input, message: state.redaction.redacted };
     state.result = scoreAssessment(safeInput);
+    incrementUsage("assessments");
     state.view = "result";
   }
   if (action === "save" && state.result) saveAssessment(state.result);
-  if (action === "print") window.print();
+  if (action === "print") {
+    incrementUsage("pdfs");
+    window.print();
+  }
+  if (action === "checkout") {
+    const provider = createPaymentProvider({
+      billingEnabled: Boolean(state.settings.billing_enabled),
+      providerConfigured: Boolean(state.settings.provider_configured)
+    });
+    const checkout = provider.createCheckoutSession({
+      planId: element.dataset.plan,
+      userId: "anonymous-local",
+      assessmentId: state.result?.assessmentId
+    });
+    window.alert(checkout.message);
+  }
   if (action === "restart") {
     state.step = 0;
     state.result = null;

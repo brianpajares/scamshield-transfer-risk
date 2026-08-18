@@ -7,5 +7,6 @@ ScamShield separates model intelligence from operational state.
 - Optional AI extraction can add canonical features from message text, but it cannot change weights, thresholds or the final score directly.
 - Google Drive is intended as the source of truth for model artifacts: manifest, feature dictionary, weights, thresholds, patterns, recommendations and localization.
 - Supabase is intended for auth, RLS-protected assessments, usage counters, settings, future products and entitlements.
+- Monetization is isolated behind plans, prices, checkout sessions, payment events and entitlements. Billing flags remain operational settings, and paid access is granted only by verified provider webhooks.
 
 This repository includes a local seed model so the MVP runs without secrets. Production should replace the seed loader with a validated `DriveModelLoader` that supports manifest hashes, schema validation, regression tests, cache TTL and `LAST_KNOWN_GOOD` rollback.

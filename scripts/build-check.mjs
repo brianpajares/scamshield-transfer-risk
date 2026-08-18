@@ -5,6 +5,7 @@ const requiredFiles = [
   "src/app.js",
   "src/styles.css",
   "src/data/model-config.js",
+  "src/data/monetization-config.js",
   "src/engine/risk-engine.js"
 ];
 

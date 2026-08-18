@@ -12,6 +12,7 @@ Functional MVP generated from `PRD_ScamShield_Transfer_Risk_Master_FINAL.docx`.
 - Browser-local history dashboard.
 - Admin screen for beta flags and model status.
 - Supabase starter migration, `.env.example`, architecture notes and tests.
+- Monetization-ready plan catalog, entitlement rules and payment-provider contract.
 
 ## Run locally
 
@@ -41,6 +42,8 @@ The app currently uses a local seed model so it can run without secrets. For pro
 - Payment adapter only after `billing_enabled=true` and commercial hosting/compliance are ready.
 
 The scoring copy intentionally avoids fraud-probability claims until real outcomes and calibration exist.
+
+See `docs/MONETIZATION.md` for the go-live checklist and payment activation sequence.
 
 ## Hosting
 

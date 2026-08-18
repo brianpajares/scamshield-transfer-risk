@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
     "build": "node scripts/build-check.mjs",
-    "test": "node tests/risk-engine.test.js"
+    "test": "node tests/risk-engine.test.js && node tests/monetization.test.js"
   },
   "keywords": [
     "risk",
