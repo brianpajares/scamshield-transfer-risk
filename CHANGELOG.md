@@ -6,7 +6,7 @@ Carpeta Drive maestra: ScamShield_Transfer_Risk
 
 ## 2026-08-18 - Plan gratis y monetizacion Peru
 
-Commit: pendiente
+Commit: `e4dc872 Add Peru free operations plan`
 
 - Se definio nombre comercial en espanol: `Escudo Transferencia`.
 - Se cambiaron los precios semilla a soles: `S/ 0`, `S/ 14.90`, `S/ 29.90`.
