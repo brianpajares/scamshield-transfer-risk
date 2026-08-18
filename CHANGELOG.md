@@ -6,7 +6,7 @@ Carpeta Drive maestra: ScamShield_Transfer_Risk
 
 ## 2026-08-18 - Produccion Netlify
 
-Commit: pendiente
+Commit: `4ad28bb Document Netlify production deployment`
 
 - Se creo el proyecto Netlify `escudo-transferencia`.
 - Se desplego produccion en `https://escudo-transferencia.netlify.app/`.
