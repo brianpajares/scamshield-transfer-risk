@@ -27,3 +27,9 @@ Carpeta: https://drive.google.com/drive/folders/1Fltw00SG51sIZWAfq9wGGJpG_lul5mU
 Repositorio: https://github.com/brianpajares/scamshield-transfer-risk
 
 Rama principal: `main`
+
+## Produccion
+
+Netlify: https://escudo-transferencia.netlify.app/
+
+Proyecto Netlify: https://app.netlify.com/projects/escudo-transferencia

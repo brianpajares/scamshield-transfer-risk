@@ -2,6 +2,12 @@
 
 The app is ready for static production hosting.
 
+Current production URL: https://escudo-transferencia.netlify.app/
+
+Netlify project: https://app.netlify.com/projects/escudo-transferencia
+
+Last verified HTTP status: `200 OK` on 2026-08-18.
+
 ## Vercel
 
 Project settings:
@@ -35,6 +41,10 @@ netlify deploy --prod --dir .
 ```
 
 The included `netlify.toml` adds SPA fallback routing and security headers.
+
+Current site ID: `c70334b4-b8fd-47e9-955e-2cf860e95e09`
+
+Current deploy ID: `6a84bfe69a406c854dfe4ff5`
 
 ## Production Readiness Checklist
 

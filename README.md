@@ -53,6 +53,7 @@ payment activation sequence and Peru commercial plan.
 
 The repository includes both `vercel.json` and `netlify.toml`.
 
+- Production Netlify URL: https://escudo-transferencia.netlify.app/
 - Vercel: static deployment from the repository root.
 - Netlify: publish directory `.` with no build command required.
 - `npm run build` performs a production file check.

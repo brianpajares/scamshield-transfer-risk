@@ -4,6 +4,15 @@ Repositorio: https://github.com/brianpajares/scamshield-transfer-risk
 
 Carpeta Drive maestra: ScamShield_Transfer_Risk
 
+## 2026-08-18 - Produccion Netlify
+
+Commit: pendiente
+
+- Se creo el proyecto Netlify `escudo-transferencia`.
+- Se desplego produccion en `https://escudo-transferencia.netlify.app/`.
+- Se verifico respuesta HTTP `200 OK`.
+- Se documento site ID `c70334b4-b8fd-47e9-955e-2cf860e95e09` y deploy ID `6a84bfe69a406c854dfe4ff5`.
+
 ## 2026-08-18 - Plan gratis y monetizacion Peru
 
 Commit: `e4dc872 Add Peru free operations plan`
